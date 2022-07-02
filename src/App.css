@@ -1,0 +1,13 @@
+*{
+  margin:0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+.app{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin:1.5rem;
+}
