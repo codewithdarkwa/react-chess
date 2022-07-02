@@ -6,7 +6,44 @@ import {Chess} from 'chess.js'
 function App() {
 
   const [game, setGame] = useState(new Chess());
-  console.log(game);
+ 
+//Let's perform a function on the game state 
+
+function safeGameMutate(modify){
+  setGame((g)=>{
+    const update = {...g}
+    modify(update)
+    return update;
+  })
+}
+//Movement of computer
+function makeRandomMove(){
+  const possibleMove = game.move();
+
+  //exit if the game is over 
+
+  if(game.game_over || game.in_draw || possibleMove.length === 0) return;
+  //select random move
+
+  const randomIndex = Math.floor(Math.random() * possibleMove.length);
+ //play random move 
+ safeGameMutate((game)=>{
+  game.move(possibleMove[randomIndex]);
+ })
+}
+
+//Perform an action when a piece is droped by a user
+ 
+function onDrop(source,target){
+  let move = null;
+  safeGameMutate((game)=>{
+    move = game.move({
+      from:source,
+      to: target,
+      promotion:'q'
+    })
+})
+}
   return (
     <div className="app">
       <Chessboard />
