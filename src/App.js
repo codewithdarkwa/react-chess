@@ -4,9 +4,8 @@ import {Chessboard} from 'react-chessboard'
 import {Chess} from 'chess.js'
 
 function App() {
-
   const [game, setGame] = useState(new Chess());
- 
+ console.log(game);
 //Let's perform a function on the game state 
 
 function safeGameMutate(modify){
@@ -18,11 +17,11 @@ function safeGameMutate(modify){
 }
 //Movement of computer
 function makeRandomMove(){
-  const possibleMove = game.move();
+  const possibleMove = game.moves();
 
   //exit if the game is over 
 
-  if(game.game_over || game.in_draw || possibleMove.length === 0) return;
+  if(game.game_over() || game.in_draw() || possibleMove.length === 0) return;
   //select random move
 
   const randomIndex = Math.floor(Math.random() * possibleMove.length);
@@ -43,10 +42,18 @@ function onDrop(source,target){
       promotion:'q'
     })
 })
+ //illegal move 
+ if(move== null) return false
+ //valid move 
+ setTimeout(makeRandomMove, 200);
+ return true;
 }
   return (
     <div className="app">
-      <Chessboard />
+      <Chessboard 
+      position={game.fen()}
+      onPieceDrop ={onDrop}
+      />
     </div>
   );
 }
