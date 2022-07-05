@@ -6,7 +6,7 @@ import {Chess} from 'chess.js'
 function App() {
   const [game, setGame] = useState(new Chess());
 //Let's perform a function on the game state 
-
+ 
 function safeGameMutate(modify){
   setGame((g)=>{
     const update = {...g}
